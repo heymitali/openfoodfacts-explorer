@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { _ } from '$lib/i18n';
 	import type { PageData } from './$types';
+	import { onMount } from 'svelte';
 
 	import Card from '$lib/ui/Card.svelte';
 	import Logo from '$lib/ui/Logo.svelte';
@@ -11,6 +12,21 @@
 	}
 
 	let { data }: Props = $props();
+
+	onMount(() => {
+		function sendHeight() {
+			// Use scrollHeight to get the full height of the content
+			const height = document.body.scrollHeight;
+			// Send the height to the parent window. '*' is a wildcard for the target origin.
+			// For better security, replace it with the actual domain of the parent page if known.
+			parent.postMessage({ frameHeight: height }, '*');
+		}
+
+		// Send the height on initial load
+		sendHeight();
+		// Send the height whenever the window is resized
+		window.addEventListener('resize', sendHeight);
+	});
 </script>
 
 <svelte:head>

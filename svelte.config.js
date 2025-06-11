@@ -22,7 +22,7 @@ const config = {
 					'https://tile.openstreetmap.org'
 				],
 				'style-src': ['self', 'unsafe-inline'],
-				'frame-ancestors': ['none']
+				'frame-ancestors': ['none', 'http://localhost:5173', 'https://openfoodfacts.org'],
 			}
 		}
 	}
